@@ -12,4 +12,7 @@ export default defineConfig({
     babelPlugins: [],
     babelOptions: {},
   },
+  define: {
+    BASE_URL: 'http://121.4.166.61:8080/api-ordering',
+  },
 });

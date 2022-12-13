@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { history } from 'umi';
 
@@ -8,62 +8,39 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
-import { reqTableList } from '@/services/goods';
-
 interface IndexProps {}
 
 const Index: React.FC<IndexProps> = () => {
   // 表格的ref, 便于自定义操作表格
   const actionRef = useRef<any>();
 
-  const handleTable = async (params: API.ParamsType) => {
-    const res = await reqTableList(params);
-    if (res?.code === 200) {
-      const { total, list } = res.data;
-      return {
-        data: list,
-        // success 请返回 true，
-        // 不然 table 会停止解析数据，即使有数据
-        success: true,
-        // 不传会使用 data 的长度，如果是分页一定要传
-        total,
-      };
-    }
+  const getData = async (params: any) => {
+    // const response = await getGoods(params);
+    // return {
+    //   data: response.data,
+    //   success: true,
+    //   total: response.meta.pagination.total,
+    // };
   };
 
-  const columns: any = [
+  const columns = [
     {
-      width: 50,
-      fixed: 'left',
-      title: '序号',
-      dataIndex: 'index',
-      valueType: 'indexBorder',
-    },
-    {
-      width: 80,
       title: '商品图',
-      align: 'center',
-      fixed: 'left',
+      dataIndex: 'cover_url',
       hideInSearch: true,
-      render: (
-        _: any,
-        record: {
-          thumb: string | undefined;
-        },
-      ) => <Image width={40} src={record.thumb} />,
+      render: (_: any, record: { cover_url: string | undefined }) => (
+        <Image
+          width={64}
+          src={record.cover_url}
+          placeholder={<Image preview={false} src={record.cover_url} width={200} />}
+        />
+      ),
     },
     {
-      align: 'center',
       title: '标题',
       dataIndex: 'title',
-      copyable: true,
-      ellipsis: true,
-      width: 280,
-      tip: '标题过长会自动收缩',
-      fixed: 'left',
     },
     {
-      align: 'center',
       title: '价格',
       dataIndex: 'price',
       hideInSearch: true,
@@ -97,7 +74,9 @@ const Index: React.FC<IndexProps> = () => {
         <ProTable
           columns={columns}
           actionRef={actionRef}
-          request={async (params): Promise<any> => handleTable(params)}
+          request={(params = {}) => {
+            console.log(params);
+          }}
           rowKey="id"
           search={{
             labelWidth: 'auto',

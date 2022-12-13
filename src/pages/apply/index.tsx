@@ -8,7 +8,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 
-import { reqTableList } from '@/services/goods';
+import { reqTableList } from '@/services/apply';
 
 interface IndexProps {}
 
@@ -41,60 +41,84 @@ const Index: React.FC<IndexProps> = () => {
     },
     {
       width: 80,
-      title: '商品图',
+      title: 'logo',
       align: 'center',
       fixed: 'left',
       hideInSearch: true,
       render: (
         _: any,
         record: {
-          thumb: string | undefined;
+          teamLogo: string | undefined;
         },
-      ) => <Image width={40} src={record.thumb} />,
+      ) => <Image width={40} src={record.teamLogo} />,
     },
     {
       align: 'center',
-      title: '标题',
-      dataIndex: 'title',
+      title: '队伍名称',
+      dataIndex: 'teamName',
       copyable: true,
       ellipsis: true,
-      width: 280,
+      width: 150,
       tip: '标题过长会自动收缩',
       fixed: 'left',
     },
     {
       align: 'center',
-      title: '价格',
-      dataIndex: 'price',
+      title: '领队姓名',
+      dataIndex: 'leader',
       hideInSearch: true,
     },
     {
-      title: '库存',
-      dataIndex: 'stock',
+      align: 'center',
+      title: '性别',
+      dataIndex: 'sex',
       hideInSearch: true,
     },
     {
-      title: '销量',
-      dataIndex: 'sales',
+      align: 'center',
+      title: '队伍名称',
+      dataIndex: 'groupName',
+      hideInSearch: true,
+    },
+    {
+      align: 'center',
+      title: '参赛项目',
+      dataIndex: 'projectNames',
+      hideInSearch: true,
+    },
+    {
+      align: 'center',
+      title: '联系电话',
+      dataIndex: 'contactPhone',
+      hideInSearch: true,
+    },
+    {
+      align: 'center',
+      title: '身份证号码',
+      dataIndex: 'contactPhone',
       hideInSearch: true,
     },
 
     {
+      width: 200,
+      align: 'center',
       title: '创建时间',
-      dataIndex: 'created_at',
+      dataIndex: 'createDatetime',
       hideInSearch: true,
     },
-    {
-      title: '操作',
-      hideInSearch: true,
-      render: (_: any, record: { id: string }) => <a>编辑</a>,
-    },
+    // {
+    //     align: 'center',
+    //     title: '操作',
+    //     hideInSearch: true,
+    //     render: (_: any, record: { id: string }) => <a>编辑</a>,
+    // },
   ];
 
   return (
     <>
       <PageContainer>
         <ProTable
+          scroll={{ x: 1300 }}
           columns={columns}
           actionRef={actionRef}
           request={async (params): Promise<any> => handleTable(params)}
